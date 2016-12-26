@@ -31,7 +31,7 @@ rho_data = importdata('rho.dat');
 % Importing exact solution
 exact_data = importdata('exact.dat');
 
-% Separating cell center coordinates 
+% Separating cell center coordinates
 input_data = importdata(input_file,' ',1);
 xc = input_data.data;
 
@@ -44,7 +44,7 @@ figure
 %for i=1:ntsteps
 %  plot(xc,u(:,i),'ok','LineWidth',1.5)
 %  pause(0.05)
-%end 
+%end
 
 
 figure

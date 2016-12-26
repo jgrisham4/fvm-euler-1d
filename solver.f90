@@ -154,16 +154,16 @@ module class_solver
       ! interior cell (CORRECT)
       ! UNIFORM ONLY
       do i=1,this%nelem-1
-        
+
         ! Finding slopes on left and right
         ! UNIFORM
-        dwL = this%elem(i)%w - this%elem(i-1)%w
-        dwR = this%elem(i+1)%w - this%elem(i)%w
+        dwL = this%elem(i)%w - this%elem(i-1)%w   ! This is a backward difference approximation to (dw/dx)_{i}
+        dwR = this%elem(i+1)%w - this%elem(i)%w   ! This is a backward difference approximation to (dw/dx)_{i+1}
         r = dwR/dwL
 
         ! Reconstructing primitive states on left and right of element
         do j=1,3
-          this%elem(i)%wL(j) = this%elem(i)%w(j) + & 
+          this%elem(i)%wL(j) = this%elem(i)%w(j) + &
             0.5d0*(this%elem(i)%w(j)-this%elem(i-1)%w(j))*minmod(r(j))
           this%elem(i)%wR(j) = this%elem(i)%w(j) - &
             0.5d0*(this%elem(i+1)%w(j)-this%elem(i)%w(j))*minmod(1.0d0/r(j))
@@ -174,7 +174,7 @@ module class_solver
 
       ! The current boundary condition is no gradient at either end.
       ! This is enforced by copying the state from the interior of the domain
-      ! to the ghost cells.  
+      ! to the ghost cells.
       this%elem(0)%wL = this%elem(1)%wR
       this%elem(this%nelem-1)%wR = this%elem(this%nelem-2)%wL
       this%elem(0)%w = this%elem(1)%w
@@ -182,7 +182,7 @@ module class_solver
       this%elem(this%nelem-1)%w = this%elem(this%nelem-2)%w
       !this%elem(this%nelem)%w(2) = -this%elem(this%nelem-1)%w(2)
 
-      ! Must iterate through all the interior interfaces and solve 
+      ! Must iterate through all the interior interfaces and solve
       ! the Riemann problem to find the fluxes
       do i=1,this%nelem-1
         f_interface(:,i) = roe_flux2(this%elem(i-1)%wL,this%elem(i)%wR,this%g)
@@ -212,12 +212,12 @@ module class_solver
       ! Opening file
       open(3,file="inputs.dat")
       write(3,*) this%grid%num_elements, this%ntsteps, this%dt
-      
+
       ! Writing cell centers
       do i=1,this%grid%num_elements
         write(3,*) this%grid%xc(i)
       end do
-      
+
       ! Closing file
       close(3)
 
@@ -229,7 +229,7 @@ module class_solver
         end do
       end do
       close(3)
-        
+
       ! Writing velocity
       open(3,file="u.dat")
       do j=1,this%ntsteps
@@ -238,7 +238,7 @@ module class_solver
         end do
       end do
       close(3)
-        
+
       ! Writing pressure
       open(3,file="p.dat")
       do j=1,this%ntsteps
@@ -247,7 +247,6 @@ module class_solver
         end do
       end do
       close(3)
-
 
     end subroutine write_results
 

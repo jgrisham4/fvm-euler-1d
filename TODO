@@ -1,3 +1,3 @@
 - Add kind defs module and replace all double precisions appropriately.
 - Add entropy fix to Roe's Riemann solver.
-- Fix Roe's Riemann solver.  My version is currently messed up, returns NaNs.
+- Fix Roe's Riemann solver.  My version is currently messed up, returns NaNs.  Using a version from author of idolikecfd.

@@ -7,7 +7,7 @@ module class_mesh
   public :: mesh,generate,write_to_file
 
   !---------------------------------------------------------
-  ! Mesh class definition 
+  ! Mesh class definition
   !---------------------------------------------------------
   type mesh
     integer                       :: num_points,num_elements
@@ -17,7 +17,7 @@ module class_mesh
     double precision, allocatable :: xc(:)
   end type mesh
 
-  contains 
+  contains
 
     ! Subroutine for generating the mesh
     subroutine generate(this,npts,x_min,x_max)
@@ -26,7 +26,7 @@ module class_mesh
       integer, intent(in) :: npts
       double precision, intent(in) :: x_min, x_max
       integer :: i, aerr
-      
+
       ! Assigning members
       this%num_points = npts
       this%num_elements = npts-1

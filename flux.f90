@@ -53,6 +53,7 @@ module flux
       double precision             :: rhoR,vR,pR   ! Right primitives
       double precision             :: HL,HR,aL,aR  ! Prims to be computed
       double precision             :: du1,du2,du3  ! Jumps in conserved vars
+      double precision             :: rhohat       ! average density
       integer                      :: i            ! dummy indices
       double precision             :: fL(3),fR(3)  ! Fluxes from Euler eqs
       double precision             :: sum_term(3)  ! Term used in final calc

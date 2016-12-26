@@ -17,11 +17,11 @@ program test_solver
   x_max     = 1.0d0
   x_min     = 0.0d0
   npts      = 201
-  ntsteps   = 800
+  ntsteps   = 400
   dt        = 0.0005d0
   gam       = 1.4d0
   soln_file = "solution.dat"
-  
+
   ! Generating mesh
   call generate(grid,npts,x_min,x_max)
 
@@ -58,5 +58,13 @@ program test_solver
 
   ! Writing results to file
   call write_results(euler_solver,soln_file)
+
+  ! Writing final result to file
+  open(4,file="results1d.dat")
+  do i=1,grid%num_elements
+    write(4,'(es13.6,a,3(es13.6,1x))') euler_solver%elem(i)%xc, " ", &
+                  euler_solver%elem(i)%w
+  end do
+  close(4)
 
 end program test_solver
